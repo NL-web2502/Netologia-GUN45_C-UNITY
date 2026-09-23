@@ -1,0 +1,216 @@
+# ====================
+# .NET Core / .NET 5+ / .NET Standard
+# ====================
+
+## Build artifacts
+bin/
+obj/
+publish/
+out/
+build/
+[Bb]uild/
+[Bb]in/
+[Oo]bj/
+
+## User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.vs/
+*.vssscc
+*.vsp
+*.vspx
+
+## Rider / JetBrains (если используете)
+.idea/
+*.sln.iml
+
+## Visual Studio Code
+.vscode/
+*.code-workspace
+
+## Package caches
+packages/
+*.nupkg
+*.snupkg
+.nuget/
+nuget.exe
+*.nuget.props
+*.nuget.targets
+*.nuget.cache
+
+## Test results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+*.coveragexml
+*.htmlcoverage
+*.testsettings
+
+## Coverage reports
+coverage/
+coverlet/
+*.dotCover
+*.VisualStudio.coverage.xml
+
+## Docker / Kubernetes
+*.dockerignore
+docker-compose.override.yml
+*.kubernetes.local.yml
+k8s/**/*.local.yaml
+
+## Node.js (если используется в ASP.NET)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+## Client-side build
+wwwroot/dist/
+wwwroot/lib/
+*.bundle.*
+*.min.*
+*.map
+
+## Compiled outputs
+*.exe
+*.dll
+*.so
+*.dylib
+*.pdb
+*.mdb
+*.ilk
+*.meta
+*.obj
+*.o
+*.cache
+*.pidb
+*.log
+*.tlog
+
+## Global temporary files
+*.tmp
+*.temp
+*.swp
+*~
+*.pid
+*.seed
+*.pid.lock
+
+## SQL Server
+*.mdf
+*.ldf
+*.ndf
+
+## Database
+*.db
+*.sqlite
+*.sqlite3
+*.sqlitedb
+
+## Backup files
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+
+## OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+## Visual Studio temporary files
+*.vsidx
+*.VC.db
+*.opensdf
+*.sdf
+*.Cache
+*.clientdata
+*.ipch
+
+## Azure Functions
+local.settings.json
+bin/obj
+host.json
+*.generated.json
+
+## Entity Framework / Migrations (опционально — закомментируй, если нужны в репозитории)
+# Migrations/*.Designer.cs
+
+## Terraform / DevOps (если используешь)
+*.tfstate
+*.tfstate.*
+.terraform/
+
+## Python (если есть смешанные проекты)
+__pycache__/
+*.py[cod]
+*$py.class
+
+## Rider (если используете)
+_ReSharper*/
+*.DotSettings.user
+*.sln.DotSettings.user
+
+## Защита от случайной публикации секретов
+*.secrets.json
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.local.json
+*.local.pfx
+*.pfx
+*.pem
+*.crt
+*.key
+
+# ====================
+# MAUI / Xamarin / Android / iOS
+# ====================
+*.userprefs
+*.mono
+*.pidb
+*.userprefs
+*.dsym
+*.ipa
+*.apk
+*.keystore
+*.jks
+*.aab
+*.xcarchive
+*.app
+*.dSYM
+*.msp
+*.msm
+*.vshost.exe
+*.vshost.exe.config
+*.manifest
+*.log
+
+# ====================
+# NuGet Package Explorer
+# ====================
+*.nupkg
+*.snupkg
+*.symbols.nupkg
+
+# ====================
+# Временные файлы пользователя
+# ====================
+*.tmp
+*.temp
+*.cache
+*.log
+*.lz4
+*.lzo
