@@ -1,3 +1,13 @@
+# ===== Unity: сгенерированные папки =====
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
 # ===== Build results =====
 [Dd]ebug/
 [Rr]elease/
@@ -12,6 +22,12 @@ bld/
 [Ll]og/
 [Ll]ogs/
 
+# ===== Unity: сгенерированные файлы проекта =====
+# Файлы решения и проекта IDE генерируются автоматически
+*.csproj
+*.unityproj
+*.sln
+*.suo
 # ===== Visual Studio =====
 .vs/
 *.user
@@ -19,6 +35,13 @@ bld/
 *.userosscache
 *.sln.docstates
 *.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
 *.rsuser
 *.sln.iml
 
@@ -33,6 +56,10 @@ bld/
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# Unity3D сгенерированные мета-файлы (не удалять!)
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
 # ===== NuGet =====
 *.nupkg
 *.snupkg
@@ -45,12 +72,20 @@ project.fragment.lock.json
 artifacts/
 .nuget/
 
+# ===== Unity: сборки =====
+sysinfo.txt
+*.apk
+*.aab
+*.unitypackage
+*.app
 # ===== ReSharper =====
 _ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
 .ReSharper*
 
+# ===== Unity: крэш-репорты =====
+crashlytics-build.properties
 # ===== Test results =====
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
@@ -66,6 +101,7 @@ coverage/
 [Cc]overage[Rr]eport/
 *.trx
 
+# ===== OS =====
 # ===== .NET Core / ASP.NET =====
 project.lock.json
 project.fragment.lock.json
@@ -95,10 +131,20 @@ wwwroot/dist/
 *.pid.lock
 *.log
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
 ehthumbs.db
 Desktop.ini
 
+# ===== IDE / редакторы =====
+.vscode/
+.idea/
+.vs/
+.consulo/
 # ===== Секреты и конфиги =====
 .env
 appsettings.Development.json
@@ -114,8 +160,26 @@ secrets.json
 *.cache
 *.swp
 *~
+
+# ===== Логи =====
+*.log
+
+# ===== Кэш (если используешь Addressables / Asset Bundles) =====
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+/[Aa]ssets/[Ss]treamingAssets/aa.meta
+/[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# ===== Rider =====
+.idea/
+*.sln.DotSettings.user
+
+# ===== Прочее =====
+*.bak
+*.tmp
+\ No newline at end of file
 _TeamCity*
 *.DotCover
 *.dotCover
 *.orig
 *.rej
+\ No newline at end of file
