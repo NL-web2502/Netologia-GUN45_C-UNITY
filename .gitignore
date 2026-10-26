@@ -1,75 +1,121 @@
-# ===== Unity: сгенерированные папки =====
-/[Ll]ibrary/
-/[Tt]emp/
-/[Oo]bj/
-/[Bb]uild/
-/[Bb]uilds/
-/[Ll]ogs/
-/[Uu]ser[Ss]ettings/
-/[Mm]emoryCaptures/
-/[Rr]ecordings/
+# ===== Build results =====
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Ll]og/
+[Ll]ogs/
 
-# ===== Unity: сгенерированные файлы проекта =====
-# Файлы решения и проекта IDE генерируются автоматически
-*.csproj
-*.unityproj
-*.sln
-*.suo
+# ===== Visual Studio =====
+.vs/
 *.user
+*.suo
+*.userosscache
+*.sln.docstates
 *.userprefs
-*.pidb
-*.booproj
-*.svd
-*.pdb
-*.mdb
-*.opendb
-*.VC.db
+*.rsuser
+*.sln.iml
 
-# Unity3D сгенерированные мета-файлы (не удалять!)
-*.pidb.meta
-*.pdb.meta
-*.mdb.meta
+# ===== Rider / JetBrains =====
+.idea/
+*.sln.iml
 
-# ===== Unity: сборки =====
-sysinfo.txt
-*.apk
-*.aab
-*.unitypackage
-*.app
+# ===== VS Code =====
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
-# ===== Unity: крэш-репорты =====
-crashlytics-build.properties
+# ===== NuGet =====
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+artifacts/
+.nuget/
 
-# ===== OS =====
+# ===== ReSharper =====
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+.ReSharper*
+
+# ===== Test results =====
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+coverage*.json
+coverage*.xml
+coverage*.info
+*.coverage
+*.coveragexml
+coverage/
+[Cc]overage[Rr]eport/
+*.trx
+
+# ===== .NET Core / ASP.NET =====
+project.lock.json
+project.fragment.lock.json
+artifacts/
+*.dbmdl
+*.dbproj.schemaview
+*.jfm
+*.pfx
+*.publishsettings
+orleans.codegen.cs
+node_modules/
+publish/
+*.Publish.xml
+
+# ===== Frontend (если ASP.NET + npm) =====
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+bower_components/
+wwwroot/dist/
+
+# ===== Runtime / OS =====
+*.pid
+*.seed
+*.pid.lock
+*.log
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
+ehthumbs.db
 Desktop.ini
 
-# ===== IDE / редакторы =====
-.vscode/
-.idea/
-.vs/
-.consulo/
+# ===== Секреты и конфиги =====
+.env
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+*.user
+*.pfx
+*.snk
+
+# ===== Misc =====
+*.tmp
+*.tmp_proj
+*.cache
 *.swp
 *~
-
-# ===== Логи =====
-*.log
-
-# ===== Кэш (если используешь Addressables / Asset Bundles) =====
-/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
-/[Aa]ssets/[Ss]treamingAssets/aa.meta
-/[Aa]ssets/[Ss]treamingAssets/aa/*
-
-# ===== Rider =====
-.idea/
-*.sln.DotSettings.user
-
-# ===== Прочее =====
-*.bak
-*.tmp
+_TeamCity*
+*.DotCover
+*.dotCover
+*.orig
+*.rej
