@@ -1,72 +1,50 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-
-public class Unit : MonoBehaviour,
-    IPointerEnterHandler,
-    IPointerExitHandler,
-    IPointerClickHandler
+public class Unit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    public PlayerColor Color { get; private set; }
-    public UnitType Type { get; private set; }
-    public Cell Cell { get; private set; }
-
-    private SpriteRenderer _renderer;
-    private Battlefield _battlefield;
-
-    public void Initialize(
-        PlayerColor color,
-        Cell cell,
-        Battlefield battlefield)
+    public Team Team;
+    public UnitType Type;
+    public Cell CurrentCell { get; private set; }
+  
+    public void Init(Team team, UnitType type, Cell cell)
     {
-        Color = color;
-        Type = UnitType.Checker;
-        Cell = cell;
-        _battlefield = battlefield;
-
-        _renderer = GetComponent<SpriteRenderer>();
-
-        _renderer.color = color == PlayerColor.White
-            ? new Color(0.95f, 0.9f, 0.75f)
-            : new Color(0.2f, 0.2f, 0.25f);
-
-        Cell.SetUnit(this);
+        Team = team;
+        Type = type;
+        CurrentCell = cell;
+        cell.SetUnit(this);
+        UpdateVisual();
     }
-
-    public void SetCell(Cell cell)
+   
+    public void MoveTo(Cell target)
     {
-        if (Cell != null)
-            Cell.ClearUnit();
-
-        Cell = cell;
-        Cell.SetUnit(this);
-        transform.position = new Vector3(
-            cell.X, cell.Y, -0.1f);
+        CurrentCell.ClearUnit();
+        CurrentCell = target;
+        target.SetUnit(this);
+        transform.position = target.transform.position + Vector3.up * 0.2f;
     }
-
-    public void PromoteToKing()
+   
+    public void Promote()
     {
         Type = UnitType.King;
- 
-        _renderer.color = new Color(1f, 0.65f, 0.1f);
+        UpdateVisual();
     }
-
-    public void OnPointerEnter(PointerEventData eventData)
+    
+    private void UpdateVisual()
+{
+    var rend = GetComponent<Renderer>();
+    if (rend != null)
     {
-        _battlefield.NotifyCellClicked(Cell);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        // Пока отдельная подсветка шашки не требуется.
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        _battlefield.NotifyCellClicked(Cell);
+        rend.material.color = Type == UnitType.King
+            ? Color.yellow
+            : (Team == Team.White ? Color.white : Color.black);
     }
 }
-
-
-
-
-
+   
+    public void OnPointerEnter(PointerEventData eventData) { }
+    public void OnPointerExit(PointerEventData eventData) { }
+   
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        BattleController.Instance.OnUnitClicked(this);
+    }
+}

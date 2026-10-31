@@ -1,128 +1,72 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Battlefield : MonoBehaviour
 {
-    public const int BoardSize = 8;
+    public const int Size = 8;
+    public Cell[,] Cells = new Cell[Size, Size];
 
-    public event Action<Cell> CellClicked;
+    [SerializeField] private Cell cellPrefab;
+    [SerializeField] private Unit unitPrefab;
+    [SerializeField] private Transform boardRoot;
 
-    public Cell[,] Cells { get; private set; }
-
-    private Sprite _squareSprite;
-    private Sprite _unitSprite;
-
-    private void Awake()
+    public void Init()
     {
-        CreateSprites();
-        CreateBoard();
-        CreateStartingUnits();
-    }
-
-    private void CreateSprites()
+     for (int x = 0; x < Size; x++)
+{
+    for (int y = 0; y < Size; y++)
     {
-        Texture2D texture = new Texture2D(1, 1);
-        texture.SetPixel(0, 0, Color.white);
-        texture.Apply();
+        var cell = Instantiate(cellPrefab, new Vector3(x, 0, y), Quaternion.identity, boardRoot);
 
-        _squareSprite = Sprite.Create(
-            texture,
-            new Rect(0, 0, 1, 1),
-            new Vector2(0.5f, 0.5f),
-            1f);
-
-        _unitSprite = _squareSprite;
-    }
-
-    private void CreateBoard()
-    {
-        Cells = new Cell[BoardSize, BoardSize];
-
-        for (int x = 0; x < BoardSize; x++)
+        var rend = cell.GetComponent<Renderer>();
+        if (rend != null)
         {
-            for (int y = 0; y < BoardSize; y++)
+            rend.material.color = (x + y) % 2 == 0 ? Color.gray : Color.white;
+        }
+        else
+        {
+            Debug.LogError($"Cell prefab has no Renderer at ({x},{y})");
+        }
+
+        cell.Init(x, y);
+        Cells[x, y] = cell;
+    }
+}
+
+        SpawnUnits();
+    }
+
+    private void SpawnUnits()
+{   
+    for (int y = 0; y < 3; y++)
+    {
+        for (int x = 0; x < Size; x++)
+        {
+            if ((x + y) % 2 == 0)
             {
-                GameObject cellObject = new GameObject(
-                    $"Cell_{x}_{y}");
-
-                cellObject.transform.SetParent(transform);
-                cellObject.transform.position =
-                    new Vector3(x, y, 0f);
-
-                SpriteRenderer renderer =
-                    cellObject.AddComponent<SpriteRenderer>();
-
-                renderer.sprite = _squareSprite;
-                renderer.sortingOrder = 0;
-                renderer.drawMode = SpriteDrawMode.Sliced;
-                cellObject.transform.localScale =
-                    new Vector3(1f, 1f, 1f);
-
-                bool isDark = (x + y) % 2 == 1;
-
-                Color color = isDark
-                    ? new Color(0.25f, 0.28f, 0.32f)
-                    : new Color(0.85f, 0.82f, 0.75f);
-
-                BoxCollider2D collider =
-                    cellObject.AddComponent<BoxCollider2D>();
-
-                collider.size = Vector2.one;
-
-                Cell cell = cellObject.AddComponent<Cell>();
-                cell.Initialize(x, y, this, color);
-
-                Cells[x, y] = cell;
+                Vector3 spawnPos = Cells[x, y].transform.position + Vector3.up * 0.2f;  
+                var unit = Instantiate(unitPrefab, spawnPos, Quaternion.identity, boardRoot);
+                unit.Init(Team.White, UnitType.Man, Cells[x, y]); 
             }
         }
     }
-
-    private void CreateStartingUnits()
+  
+    for (int y = 5; y < Size; y++)
     {
-        for (int x = 0; x < BoardSize; x++)
+        for (int x = 0; x < Size; x++)
         {
-            for (int y = 0; y < BoardSize; y++)
+            if ((x + y) % 2 == 0)
             {
-                if ((x + y) % 2 != 1)
-                    continue;
-
-                if (y < 3)
-                    CreateUnit(x, y, PlayerColor.Dark);
-                else if (y > 4)
-                    CreateUnit(x, y, PlayerColor.White);
+                Vector3 spawnPos = Cells[x, y].transform.position + Vector3.up * 0.2f; 
+                var unit = Instantiate(unitPrefab, spawnPos, Quaternion.identity, boardRoot);
+                unit.Init(Team.Black, UnitType.Man, Cells[x, y]);
             }
         }
     }
+}
 
-    private void CreateUnit(
-        int x,
-        int y,
-        PlayerColor color)
-    {
-        GameObject unitObject = new GameObject(
-            $"{color}_Checker_{x}_{y}");
-
-        unitObject.transform.SetParent(transform);
-        unitObject.transform.position =
-            new Vector3(x, y, -0.1f);
-
-        SpriteRenderer renderer =
-            unitObject.AddComponent<SpriteRenderer>();
-
-        renderer.sprite = _unitSprite;
-        renderer.sortingOrder = 1;
-
-        unitObject.transform.localScale =
-            new Vector3(0.78f, 0.78f, 1f);
-
-        unitObject.AddComponent<CircleCollider2D>();
-
-        Unit unit = unitObject.AddComponent<Unit>();
-        unit.Initialize(color, Cells[x, y], this);
-    }
-
-    public void NotifyCellClicked(Cell cell)
-    {
-        CellClicked?.Invoke(cell);
+    public List<Cell> GetNeighbors(Cell cell, Team team, bool forwardOnly)
+    { 
+        return new List<Cell>();
     }
 }

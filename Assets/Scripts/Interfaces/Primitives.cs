@@ -1,15 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public enum PlayerColor
+public enum Team
 {
     White,
-    Dark
+    Black
 }
 
 public enum UnitType
 {
-    Checker,
+    Man,
     King
 }

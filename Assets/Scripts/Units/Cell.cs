@@ -1,60 +1,51 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-
-public class Cell : MonoBehaviour,
-    IPointerEnterHandler,
-    IPointerExitHandler,
-    IPointerClickHandler
+public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public int X { get; private set; }
     public int Y { get; private set; }
-
-    public Unit Unit { get; private set; }
-
-    private SpriteRenderer _renderer;
-    private Color _baseColor;
-    private Battlefield _battlefield;
-
-    public void Initialize(
-        int x,
-        int y,
-        Battlefield battlefield,
-        Color color)
+    public Unit OccupiedUnit { get; private set; }
+   
+    [SerializeField] private Color highlightColor = new Color(1f, 1f, 0f, 1f);
+    
+    private Color originalColor;
+    private Renderer rend;
+    private Material mat;
+    
+    public void Init(int x, int y)
     {
         X = x;
         Y = y;
-        _battlefield = battlefield;
-        _baseColor = color;
 
-        _renderer = GetComponent<SpriteRenderer>();
-        _renderer.color = color;
+        rend = GetComponent<Renderer>();
+       
+        if (rend != null)
+        {
+            mat = rend.material;
+            originalColor = mat.color;
+        }
+       
+        else
+        {
+            Debug.LogError($"Cell ({x},{y}): no Renderer found on {name}");
+        }
     }
-
-    public void SetUnit(Unit unit)
+    
+    public void SetUnit(Unit unit) => OccupiedUnit = unit;
+    public void ClearUnit() => OccupiedUnit = null;
+    public bool IsEmpty() => OccupiedUnit == null;
+   
+    public void Highlight(bool active)
     {
-        Unit = unit;
+        if (mat == null) return;
+        mat.color = active ? highlightColor : originalColor;
     }
-
-    public void ClearUnit()
-    {
-        Unit = null;
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (_renderer != null)
-            _renderer.color = Color.Lerp(
-                _baseColor, Color.yellow, 0.3f);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (_renderer != null)
-            _renderer.color = _baseColor;
-    }
-
+    
+    public void OnPointerEnter(PointerEventData eventData) { }
+    public void OnPointerExit(PointerEventData eventData) { }
     public void OnPointerClick(PointerEventData eventData)
     {
-        _battlefield.NotifyCellClicked(this);
+        if (BattleController.Instance != null)
+            BattleController.Instance.OnCellClicked(this);
     }
 }
