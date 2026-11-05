@@ -2,73 +2,42 @@ using UnityEngine;
 
 public class MoveCommand : IGameplayCommand
 {
-    private readonly Unit unit;
-    private readonly Cell targetCell;
+    private readonly BattleController _controller;
+    private readonly Unit _selectedUnit;
 
-    public MoveCommand(Unit unit, Cell targetCell)
+    public MoveCommand(BattleController controller, Unit selectedUnit)
     {
-        this.unit = unit;
-        this.targetCell = targetCell;
+        _controller = controller;
+        _selectedUnit = selectedUnit;
     }
 
-    public void Interact(Cell cell)
+    public void Interact(Cell targetCell)
     {
-        if (unit == null || targetCell == null) return;
-        if (unit.CurrentCell == null) return;
-        if (BattleController.Instance == null || BattleController.Instance.Battlefield == null) return;
+        Cell fromCell = _selectedUnit.CurrentCell;
+        MoveValidator.Move move = _controller.FindMove(fromCell, targetCell);
 
-        var battlefield = BattleController.Instance.Battlefield;
-
-        int fromX = unit.CurrentCell.X;
-        int fromY = unit.CurrentCell.Y;
-        int dx = targetCell.X - fromX;
-        int dy = targetCell.Y - fromY;
- 
-        if (Mathf.Abs(dx) >= 2 || Mathf.Abs(dy) >= 2)
+        bool wasCapture = move.IsCapture;
+        if (wasCapture && move.CapturedUnit != null)
         {
-            TryCaptureAlongPath(battlefield, fromX, fromY, targetCell);
+            if (move.CapturedCell != null) move.CapturedCell.OccupiedUnit = null;
+            Object.Destroy(move.CapturedUnit.gameObject);
+        }
+
+        _selectedUnit.MoveTo(targetCell);
+ 
+        if (_selectedUnit.Type == PieceType.Man)
+        {
+            int promotionRow = _selectedUnit.Team == Team.White ? 7 : 0;
+            if (targetCell.GridPos.y == promotionRow)
+                _selectedUnit.PromoteToKing();
         }
  
-        unit.MoveTo(targetCell);
- 
-        if (unit.Type == UnitType.Man)
+        if (wasCapture && MoveValidator.HasMoreCaptures(_selectedUnit, _controller.Battlefield))
         {
-            if ((unit.Team == Team.White && targetCell.Y == Battlefield.Size - 1) ||
-                (unit.Team == Team.Black && targetCell.Y == 0))
-            {
-                unit.Promote();
-            }
+            _controller.StartRecursiveCapture(_selectedUnit);
+            return;
         }
- 
-        if (PlayerController.Instance != null)
-        {
-            PlayerController.Instance.EndTurn();
-        }
-    }
 
-    private void TryCaptureAlongPath(Battlefield battlefield, int fromX, int fromY, Cell target)
-    {
-        int dx = target.X - fromX;
-        int dy = target.Y - fromY;
-
-        int stepX = dx > 0 ? 1 : -1;
-        int stepY = dy > 0 ? 1 : -1;
-
-        int cx = fromX + stepX;
-        int cy = fromY + stepY;
- 
-        while (cx != target.X || cy != target.Y)
-        {
-            var mid = battlefield.Cells[cx, cy];
-            if (!mid.IsEmpty() && mid.OccupiedUnit != null && mid.OccupiedUnit.Team != unit.Team)
-            { 
-                Object.Destroy(mid.OccupiedUnit.gameObject);
-                mid.ClearUnit();
-                return;
-            }
-
-            cx += stepX;
-            cy += stepY;
-        }
+        _controller.FinishTurn();
     }
 }

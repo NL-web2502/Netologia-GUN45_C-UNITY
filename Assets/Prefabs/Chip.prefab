@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8548065296191168414}
   - component: {fileID: 20391312255985056}
   - component: {fileID: 3131614573446851907}
-  - component: {fileID: 7709008318931459918}
-  - component: {fileID: -2400874794273459212}
+  - component: {fileID: -6239180278869259831}
+  - component: {fileID: -4053695196787819936}
   m_Layer: 0
   m_Name: Chip
   m_TagString: Untagged
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.05, y: 0.64, z: -0.21}
-  m_LocalScale: {x: 0.5, y: 0.1, z: 0.5}
+  m_LocalScale: {x: 0.5, y: 0.2, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5d2c4747e1470e442b7ee1c5b38f6dfd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -85,7 +85,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7709008318931459918
+--- !u!114 &-6239180278869259831
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,9 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6edc1311e0a724e85c4149f91e31a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Team: 0
-  Type: 0
---- !u!136 &-2400874794273459212
+  kingVisual: {fileID: 2455951089753270689, guid: 18cc645a3288a20409e2e4384fc114af, type: 3}
+--- !u!136 &-4053695196787819936
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,7 +117,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.9
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}

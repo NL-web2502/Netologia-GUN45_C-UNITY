@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4d5b1e98d868c540985f2d20cea8061, type: 3}
+  m_Name: BoardSettimgs
+  m_EditorClassIdentifier: 
+  Size: 8
+  CellPrefab: {fileID: -5862925734143167764, guid: fd5a38105a382524cac3c0b522f3d172, type: 3}
+  UnitPrefab: {fileID: -6239180278869259831, guid: 75053eb39de91eb4a9f92120f4deba7c, type: 3}
+  LightCellMat: {fileID: 2100000, guid: b1ef68191c7ff7d4ca04ca2ecd705c64, type: 2}
+  DarkCellMat: {fileID: 2100000, guid: 6d830f32e8e428c4bb08438abbaeccf8, type: 2}
+  WhiteMat: {fileID: 2100000, guid: 049f9fef8d53a7d4285954c49b2494ee, type: 2}
+  BlackMat: {fileID: 2100000, guid: 5d2c4747e1470e442b7ee1c5b38f6dfd, type: 2}
+  KingMat: {fileID: 2100000, guid: b382f83544a85094cb28f59a406021d6, type: 2}
+  HighlightMat: {fileID: 2100000, guid: 2df66abcfc45d2244b43f98106fe8af7, type: 2}
+  SelectedMat: {fileID: 2100000, guid: 54fd7dab848c81344b958d52acc37940, type: 2}

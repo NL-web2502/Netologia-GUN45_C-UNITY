@@ -1,11 +1,3 @@
-public enum Team
-{
-    White,
-    Black
-}
-
-public enum UnitType
-{
-    Man,
-    King
-}
+public enum Team { White, Black }
+public enum GameStatus { Wait, Select, Move, GameOver }
+public enum PieceType { Man, King } 

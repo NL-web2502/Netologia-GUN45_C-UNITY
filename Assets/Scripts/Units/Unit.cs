@@ -1,50 +1,49 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+
 public class Unit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    public Team Team;
-    public UnitType Type;
+    [SerializeField] private GameObject kingVisual;
+    public Team Team { get; private set; }
+    public PieceType Type { get; private set; }
     public Cell CurrentCell { get; private set; }
-  
-    public void Init(Team team, UnitType type, Cell cell)
+
+    private BattleController _battleController;
+
+    public void Init(Team team, PieceType type, Cell cell, BattleController controller)
     {
         Team = team;
         Type = type;
         CurrentCell = cell;
-        cell.SetUnit(this);
+        _battleController = controller;
+        cell.OccupiedUnit = this;
         UpdateVisual();
     }
-   
-    public void MoveTo(Cell target)
+
+    public void MoveTo(Cell newCell)
     {
-        CurrentCell.ClearUnit();
-        CurrentCell = target;
-        target.SetUnit(this);
-        transform.position = target.transform.position + Vector3.up * 0.2f;
+        if (CurrentCell != null) CurrentCell.OccupiedUnit = null;
+        CurrentCell = newCell;
+        newCell.OccupiedUnit = this;
+        transform.position = newCell.transform.position + Vector3.up * 0.5f;
     }
-   
-    public void Promote()
+
+    public void PromoteToKing()
     {
-        Type = UnitType.King;
+        Type = PieceType.King;
         UpdateVisual();
     }
-    
+
     private void UpdateVisual()
-{
-    var rend = GetComponent<Renderer>();
-    if (rend != null)
     {
-        rend.material.color = Type == UnitType.King
-            ? Color.yellow
-            : (Team == Team.White ? Color.white : Color.black);
+        if (kingVisual != null) kingVisual.SetActive(Type == PieceType.King);
     }
-}
-   
-    public void OnPointerEnter(PointerEventData eventData) { }
-    public void OnPointerExit(PointerEventData eventData) { }
-   
+
+    public void OnPointerEnter(PointerEventData eventData) => _battleController?.OnUnitHover(this, true);
+    public void OnPointerExit(PointerEventData eventData) => _battleController?.OnUnitHover(this, false);
     public void OnPointerClick(PointerEventData eventData)
     {
-        BattleController.Instance.OnUnitClicked(this);
+        if (eventData.button == PointerEventData.InputButton.Left)
+            _battleController?.OnUnitClicked(this);
     }
 }

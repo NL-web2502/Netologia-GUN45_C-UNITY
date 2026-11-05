@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2894946641873792766}
   - component: {fileID: 6863076886125240272}
   - component: {fileID: 1731315632811945093}
-  - component: {fileID: 3986271966463555239}
+  - component: {fileID: -8810894655598588448}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -106,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3986271966463555239
+--- !u!114 &-8810894655598588448
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,4 +118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e85eb46df2f0d34a97a34bfe11f3e7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightColor: {r: 1, g: 1, b: 0, a: 0.5}
+  meshRenderer: {fileID: 6863076886125240272}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  selectColor: {r: 0, g: 1, b: 0, a: 1}
+  moveColor: {r: 0, g: 1, b: 1, a: 1}
