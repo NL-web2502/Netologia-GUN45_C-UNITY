@@ -10,7 +10,7 @@ public class BattleController : MonoBehaviour
 
     public Battlefield Battlefield => battlefield;
 
-    private GameStatus _status = GameStatus.Wait;
+    private GameStatus _status = GameStatus.Select;
     private Team _currentTeam = Team.White;
     private Unit _selectedUnit;
     private List<MoveValidator.Move> _validMoves = new();
@@ -34,10 +34,9 @@ public class BattleController : MonoBehaviour
 
     private void OnEnable()
     {
-        _selectAction.performed += OnSelectPerformed;
         _confirmAction.performed += OnConfirmPerformed;
         _cancelAction.performed += OnCancelPerformed;
-        _selectAction.Enable();
+        
         _confirmAction.Enable();
         _cancelAction.Enable();
     }
@@ -54,8 +53,7 @@ public class BattleController : MonoBehaviour
         battlefield.GenerateBoard(this);
         StartTurn(Team.White);
     }
-
-    // --- Обработка кликов мышью напрямую через луч камеры ---
+ 
     private void Update()
     {
         if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
@@ -108,8 +106,6 @@ public class BattleController : MonoBehaviour
         foreach (var m in _validMoves)
             m.To.SetHighlight(false, false, true);
     }
-
-    private void OnSelectPerformed(InputAction.CallbackContext ctx) { }
 
     private void OnConfirmPerformed(InputAction.CallbackContext ctx) { }
 

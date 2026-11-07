@@ -1,3 +1,3 @@
 public enum Team { White, Black }
-public enum GameStatus { Wait, Select, Move, GameOver}
+public enum GameStatus {Select, Move}
 public enum PieceType { Man, King } 

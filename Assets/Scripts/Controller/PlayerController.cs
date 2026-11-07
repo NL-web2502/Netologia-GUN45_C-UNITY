@@ -11,10 +11,4 @@ public class PlayerController : MonoBehaviour
         if (turnText != null)
             turnText.text = team == Team.White ? "Ход белых" : "Ход чёрных";
     }
-
-    public void SetInputBlocked(bool blocked)
-    {
-        if (battleController != null)
-            battleController.enabled = !blocked;
-    }
 }
