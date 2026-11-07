@@ -26,9 +26,7 @@ public class BattleController : MonoBehaviour
 
     private void Awake()
     {
-       
         _inputActions = new InputActionAssets(); 
-         
         _selectAction = _inputActions.Gameplay.Select;
         _confirmAction = _inputActions.Gameplay.Confirm;
         _cancelAction = _inputActions.Gameplay.Cancel;
@@ -56,10 +54,39 @@ public class BattleController : MonoBehaviour
         battlefield.GenerateBoard(this);
         StartTurn(Team.White);
     }
- 
+
+    // --- Обработка кликов мышью напрямую через луч камеры ---
+    private void Update()
+    {
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            Cell clickedCell = GetCellUnderPointer();
+            
+            if (clickedCell != null)
+            {
+                Debug.Log("Клик по клетке: " + clickedCell.GridPos);
+                
+                if (clickedCell.OccupiedUnit != null)
+                {
+                    OnUnitClicked(clickedCell.OccupiedUnit);
+                }
+                else
+                {
+                    OnCellClicked(clickedCell);
+                }
+            }
+        }
+    }
+
     public void OnCellClicked(Cell cell)
     {
         if (_status != GameStatus.Move || _selectedUnit == null) return;
+
+        var move = FindMove(_selectedUnit.CurrentCell, cell);
+        if (move.To != null)
+        {
+            new MoveCommand(this, _selectedUnit).Interact(cell);
+        }
     }
 
     public void OnUnitClicked(Unit unit)
@@ -81,29 +108,15 @@ public class BattleController : MonoBehaviour
         foreach (var m in _validMoves)
             m.To.SetHighlight(false, false, true);
     }
- 
-    private void OnSelectPerformed(InputAction.CallbackContext ctx) { /* клик идёт через EventSystem */ }
 
-    private void OnConfirmPerformed(InputAction.CallbackContext ctx)
-    {
-        if (_status != GameStatus.Move || _selectedUnit == null) return;
+    private void OnSelectPerformed(InputAction.CallbackContext ctx) { }
 
-        Cell target = GetCellUnderPointer();
-        if (target == null) return;
-
-        var move = FindMove(_selectedUnit.CurrentCell, target);
-        if (move.To == null) return;
-
-        new MoveCommand(this, _selectedUnit).Interact(target);
-    }
+    private void OnConfirmPerformed(InputAction.CallbackContext ctx) { }
 
     private void OnCancelPerformed(InputAction.CallbackContext ctx)
     {
-        if (_isRecursiveCapture)
-        {
-            Debug.LogWarning("Рекурсивное взятие нельзя отменить — продолжайте бить!");
-            return;
-        }
+        if (_isRecursiveCapture) return;
+
         if (_status == GameStatus.Move)
         {
             _selectedUnit = null;
@@ -113,7 +126,7 @@ public class BattleController : MonoBehaviour
             HighlightMandatoryUnits();
         }
     }
- 
+
     public MoveValidator.Move FindMove(Cell from, Cell to)
     {
         foreach (var m in _validMoves)
@@ -156,7 +169,7 @@ public class BattleController : MonoBehaviour
         AnalyzeMandatoryCapture();
         HighlightMandatoryUnits();
     }
- 
+
     private void AnalyzeMandatoryCapture()
     {
         _isCaptureMandatory = false;
@@ -180,7 +193,7 @@ public class BattleController : MonoBehaviour
         foreach (var u in _captureUnits)
             u.CurrentCell.SetHighlight(false, true, false);
     }
- 
+
     public void OnCellHover(Cell cell, bool enter)
     {
         if (enter) cell.SetHighlight(true, false, false);
@@ -202,14 +215,15 @@ public class BattleController : MonoBehaviour
     private Cell GetCellUnderPointer()
     {
         if (mainCamera == null) return null;
+        
         Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit hit))
-        {
-            var cell = hit.collider.GetComponent<Cell>();
-            if (cell != null) return cell;
-
+        { 
             var unit = hit.collider.GetComponent<Unit>();
             if (unit != null) return unit.CurrentCell;
+ 
+            var cell = hit.collider.GetComponent<Cell>();
+            if (cell != null) return cell;
         }
         return null;
     }

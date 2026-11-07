@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] private MeshRenderer meshRenderer;
 
@@ -10,8 +10,11 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public bool IsBlackCell => (GridPos.x + GridPos.y) % 2 != 0;
 
     private BattleController _battleController;
-    private Battlefield _battlefield;  
- 
+    private Battlefield _battlefield;
+
+    private bool _isMoveTarget;
+    private bool _isSelected;
+
     public void Init(Vector2Int pos, BattleController controller, Battlefield battlefield)
     {
         GridPos = pos;
@@ -23,7 +26,10 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public void SetHighlight(bool hover, bool selected, bool moveTarget)
     {
         if (meshRenderer == null) return;
-         
+        
+        _isMoveTarget = moveTarget;
+        _isSelected = selected;
+
         if (moveTarget) meshRenderer.material.color = Color.cyan;
         else if (selected) meshRenderer.material.color = Color.green;
         else if (hover) meshRenderer.material.color = Color.yellow;
@@ -46,11 +52,14 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public void OnPointerExit(PointerEventData eventData)
     {
         _battleController?.OnCellHover(this, false);
+        if (_isMoveTarget || _isSelected)
+            SetHighlight(false, _isSelected, _isMoveTarget);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
-            _battleController?.OnCellClicked(this);
     }
+
+    public void OnPointerDown(PointerEventData eventData) { }
+    public void OnPointerUp(PointerEventData eventData) { }
 }

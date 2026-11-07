@@ -95,16 +95,16 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-8810894655598588448
 MonoBehaviour:
@@ -119,7 +119,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshRenderer: {fileID: 6863076886125240272}
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
-  hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  selectColor: {r: 0, g: 1, b: 0, a: 1}
-  moveColor: {r: 0, g: 1, b: 1, a: 1}
